@@ -8,8 +8,8 @@
 #'
 #' @title Palette interpolation
 #'
-#' @param n number of interpolation points
 #' @param pal_name name of the palette
+#' @param n number of interpolation points
 #' @param alpha sets transparency of each color
 #' @param reverse if true, reverses order
 #'
@@ -20,15 +20,14 @@
 #' @importFrom scales alpha
 #'
 #' @examples
-#' \dontrun{
 #' #View different interpolations of palettes
 #' cesar_rampr("cesar_green_c") %>%  scales::show_col()
 #' cesar_rampr("cesar_green_c", n = 10) %>% scales::show_col()
 #' cesar_rampr("cesar_green_c", n = 100)
-#'}
+#'
 
 
-cesar_rampr <- function(n, pal_name = "cesar", alpha = 1, reverse = FALSE) {
+cesar_rampr <- function(pal_name = "cesar", n, alpha = 1, reverse = FALSE) {
 
   pal <- cesar_palettes[[pal_name]]
 
@@ -78,7 +77,7 @@ cesar_rampr <- function(n, pal_name = "cesar", alpha = 1, reverse = FALSE) {
 cesar_pal <- function(palette = "cesar", alpha = 1, reverse = FALSE) {
 
   function(n) {
-    cesar_rampr(n, palette, alpha, reverse)
+    cesar_rampr(palette, n, alpha, reverse)
   }
 
 }
@@ -99,7 +98,7 @@ cesar_pal <- function(palette = "cesar", alpha = 1, reverse = FALSE) {
 
 cesar_gradient_n_pal <- function(palette = "cesar_green_c", alpha = 1, reverse = T, na.color = NA)
 {
-  pal <- cesar_rampr(n = 256, pal_name = palette, alpha, reverse)
+  pal <- cesar_rampr(pal_name = palette, n = 256, alpha, reverse)
 
   colors <- tolower(pal)
   lab_in <- farver::decode_colour(colour = colors, alpha = TRUE,

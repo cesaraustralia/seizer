@@ -33,10 +33,9 @@ theme_cesar(
 This function converts your ggplot object to the Cesar theme. The default font is Inter
 }
 \examples{
-\dontrun{
 library(systemfonts)
 library(ggplot2)
 ggplot(iris, aes(Sepal.Length, y = Sepal.Width, colour = Species)) +
-  geom_point() + theme_cesar()
-  }
+ geom_point() + theme_cesar()
+
 }

@@ -14,12 +14,11 @@
 #' @importFrom ggplot2 %+replace% aes geom_point theme_minimal theme
 #'
 #' @examples
-#' \dontrun{
 #' library(systemfonts)
 #' library(ggplot2)
 #' ggplot(iris, aes(Sepal.Length, y = Sepal.Width, colour = Species)) +
-#'   geom_point() + theme_cesar()
-#'   }
+#'  geom_point() + theme_cesar()
+#'
 
 
 theme_cesar <- function(font_title,
@@ -29,12 +28,6 @@ theme_cesar <- function(font_title,
                         facet_space = 2,
                         text_scale = 1,
                         ...) {
-
-  if(!isNamespaceLoaded("systemfonts"))
-    cli::cli_alert_warning("The {.pkg systemfonts} package is not loaded. Run {.code library(systemfonts)}")
-
-  if(isNamespaceLoaded("extrafont"))
-    cli::cli_alert_warning("The {.pkg extrafont} package is loaded. Remove this library and restart your session as it conflicts with {.pkg systemfonts}")
 
   cesar_font_default <- getOption('cesar_font')
 

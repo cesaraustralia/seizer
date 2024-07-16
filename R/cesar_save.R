@@ -49,7 +49,7 @@ cesar_save <- function(filename,
   }
 
   if(preset == "twitter"){
-    scale = .5
+    scale = 1
     height = 12.5
     width = 22.2
     dpi = 72
@@ -108,6 +108,7 @@ cesar_save <- function(filename,
                     dpi = dpi,
                     ...)
 
+    showtext::showtext_opts(dpi = 72)
     plot
 
   } else {
@@ -119,5 +120,7 @@ cesar_save <- function(filename,
                     height = height,
                     dpi = dpi,
                     ...)
+
+    showtext::showtext_opts(dpi = 72)
   }
 }

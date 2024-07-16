@@ -20,14 +20,13 @@ Calling \code{cesar_palettes$cesar} will return the seven color palette where Ce
 Calling \code{cesar_palettes$cesar_green_c} will return an interpolated ramp of 10 colors for Cesar green.
 }
 \examples{
-\dontrun{
 
 # List names of palettes available
 names(cesar_palettes)
 
-show_col(cesar_palettes$cesar)
-show_col(cesar_palettes$gold_teal_d)
-show_col(cesar_palettes$warm_grey_c)
-}
+scales::show_col(cesar_palettes$cesar)
+scales::show_col(cesar_palettes$gold_teal_d)
+scales::show_col(cesar_palettes$warm_grey_c)
+
 }
 \keyword{datasets}

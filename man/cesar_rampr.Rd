@@ -4,12 +4,12 @@
 \alias{cesar_rampr}
 \title{Palette interpolation}
 \usage{
-cesar_rampr(n, pal_name = "cesar", alpha = 1, reverse = FALSE)
+cesar_rampr(pal_name = "cesar", n, alpha = 1, reverse = FALSE)
 }
 \arguments{
-\item{n}{number of interpolation points}
-
 \item{pal_name}{name of the palette}
+
+\item{n}{number of interpolation points}
 
 \item{alpha}{sets transparency of each color}
 
@@ -23,10 +23,9 @@ If a discrete palette is selected, colors are recycled to the length of the desi
 Chooses palette to use with ggplot2
 }
 \examples{
-\dontrun{
 #View different interpolations of palettes
 cesar_rampr("cesar_green_c") \%>\%  scales::show_col()
 cesar_rampr("cesar_green_c", n = 10) \%>\% scales::show_col()
 cesar_rampr("cesar_green_c", n = 100)
-}
+
 }

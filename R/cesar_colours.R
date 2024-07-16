@@ -12,15 +12,14 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #'
 #' # List names of palettes available
 #' names(cesar_palettes)
 #'
-#' show_col(cesar_palettes$cesar)
-#' show_col(cesar_palettes$gold_teal_d)
-#' show_col(cesar_palettes$warm_grey_c)
-#' }
+#' scales::show_col(cesar_palettes$cesar)
+#' scales::show_col(cesar_palettes$gold_teal_d)
+#' scales::show_col(cesar_palettes$warm_grey_c)
+#'
 
 cesar_palettes <- list(
 
