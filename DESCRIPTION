@@ -1,12 +1,25 @@
 Package: seizer
-Title: What the Package Does (One Line, Title Case)
+Title: Seize Data Vis in R by the Reins!
 Version: 0.0.0.9000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
+    person("Alex", "Slavenko", , "aslavenko@cesaraustralia.com", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-3265-7715"))
+Description: custom made ggplot2 themes and colour palettes for Cesar Australia staff, in line with the company's style guide.
+License: CC0
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.1
+Imports:
+  ggplot2 (>= 3.4.0),
+  magrittr (>= 2.0.3),
+  showtext (>= 0.9.6),
+  sysfonts (>= 0.8.8),
+  png (>= 0.1.7),
+  patchwork (>= 1.2.0)
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
+URL: https://github.com/alexsla/seizer,
+    https://cesaraustralia.github.io/seizer/
+BugReports: https://github.com/alexsla/seizer/issues

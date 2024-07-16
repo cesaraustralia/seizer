@@ -1,5 +1,10 @@
 .Rproj.user
 .Rhistory
-.Rdata
-.httr-oauth
-.DS_Store
+.RData
+.Ruserdata
+test.R
+default.png
+cesar_print.pdf
+cesar_twitter.jpeg
+cesar_web.png
+docs

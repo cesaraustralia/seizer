@@ -1,0 +1,17 @@
+url: https://cesaraustralia.github.io/seizer/
+template:
+  bootstrap: 5
+reference:
+- title: Functions
+  desc: Functions for use with ggplot2
+- contents:
+  - theme_cesar
+  - starts_with("scale")
+  - cesar_save
+- title: Colour
+  desc: Cesar Australia colour palettes and assorted help functions
+- contents:
+  - cesar_palettes
+  - cesar_rampr
+  - cesar_pal
+  - cesar_gradient_n_pal
