@@ -1,8 +1,9 @@
 pandoc: 3.1.11
 pkgdown: 2.1.0
 pkgdown_sha: ~
-articles: {}
-last_built: 2024-07-17T00:00Z
+articles:
+  articles/ggplot2-tutorial: ggplot2-tutorial.html
+last_built: 2024-07-19T06:34Z
 urls:
   reference: https://cesaraustralia.github.io/seizer/reference
   article: https://cesaraustralia.github.io/seizer/articles
