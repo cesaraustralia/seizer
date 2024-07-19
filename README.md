@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# seizer <img src="man/figures/hex.png" align="right" alt="" width="120" />
+# seizer <a href="https://cesaraustralia.github.io/seizer/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
 The **seizer** package is designed to make data visualisation quick,
 easy and consistent for all Cesar staff. The package contains a few
