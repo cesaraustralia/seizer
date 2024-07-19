@@ -21,6 +21,8 @@ knitr::opts_chunk$set(
 
 The **seizer** package is designed to make data visualisation quick, easy and consistent for all Cesar staff. The package contains a few functions which fit in the general `ggplot2` syntax, and by using them you can make sure your figures will always look the same and adhere to the Cesar Australia style guide.
 
+If you are new to `ggplot2`, or just need a refresher, have a read through the **ggplot2 Tutorial** under the articles tab.
+
 ## Installation
 
 **seizer** can be installed by running the following code:
@@ -41,7 +43,7 @@ Here is a `ggplot2` figure, which includes pretty much everything you might incl
 
 ```{r ggplot default, warning = FALSE}
 p <- iris %>%
-  ggplot(aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fill = Species)) + geom_point() + geom_smooth() + facet_wrap(~Species, scales = "free") + labs(title = "This is a title", subtitle = "This is a subtitle")
+  ggplot(aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fill = Species)) + geom_point() + geom_smooth(method = "lm") + facet_wrap(~Species, scales = "free") + labs(title = "This is a title", subtitle = "This is a subtitle")
 
 p
 ```
@@ -55,11 +57,11 @@ p <-
 p
 ```
 
-Notice that while the "static" plot elements have changes (colours, linewidths and fonts of labels, gridlines, backgrounds, etc.), the colours that are actually mapped onto the data using the `aes()` function have remained unchanged at their default values. You might recall that in order to change these in the `ggplot2` syntax you need to use the `scale_` family of functions. **seizer** comes with its own family of `scale_cesar` functions, which allow you to map Cesar Australia colour palettes onto your figures:
+Notice that while the "static" plot elements have changes (colours, linewidths and fonts of labels, gridlines, backgrounds, etc.), the colours that are actually mapped onto the data using the `ggplot2::aes()` function have remained unchanged at their default values. You might recall that in order to change these in the `ggplot2` syntax you need to use the `scale_*()` family of functions. **seizer** comes with its own family of `scale_*_cesar_*()` functions, which allow you to map Cesar Australia colour palettes onto your figures:
 
 ```{r ggplot cesar scale, warning = FALSE}
 p <-
-  iris %>% ggplot(aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fill = Species)) + geom_point() + geom_smooth(colour = ancient_lavastone) + facet_wrap(~Species, scales = "free") + labs(title = "This is a title", subtitle = "This is a subtitle") +
+  iris %>% ggplot(aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fill = Species)) + geom_point() + geom_smooth(colour = ancient_lavastone, method = "lm") + facet_wrap(~Species, scales = "free") + labs(title = "This is a title", subtitle = "This is a subtitle") +
   theme_cesar() + scale_colour_cesar_c(palette = "galliano_c") + scale_fill_cesar_d()
 
 p
@@ -67,7 +69,7 @@ p
 
 The next section contains more information about these colour palettes and how to use them.
 
-The final function you will use is `cesar_save()`. This is a wrapper function around the `ggsave()` function which you may have come across, but uses several pre-determined presets to generate your outputs. These match the size and resolution of the saved plot to the destination format. There are five presets: `twitter`, `web`, `linkedin`, `facebook` and `print`. If no preset is specified, the function defaults to `print`. There is also an optional argument, `logo`, which can be used to add a Cesar logo at the top right of the plot by setting `logo = TRUE`. This is turned off by default. You can also specify a destination pathway using the `path` argument - by default, the plot is saved to your working directory. Finally, the export defaults to .png format if an accepted format is not specified in the filename (e.g., "plot.jpeg").
+The final function you will use is `cesar_save()`. This is a wrapper function around the `ggplot2::ggsave()` function which you may have come across, but uses several pre-determined presets to generate your outputs. These match the size and resolution of the saved plot to the destination format. There are five presets: `twitter`, `web`, `linkedin`, `facebook` and `print`. If no preset is specified, the function defaults to `print`. There is also an optional argument, `logo`, which can be used to add a Cesar logo at the top right of the plot by setting `logo = TRUE`. This is turned off by default. You can also specify a destination pathway using the `path` argument - by default, the plot is saved to your working directory. Finally, the export defaults to .png format if an accepted format is not specified in the filename (e.g., "plot.jpeg").
 
 For example, if we wanted to save our plot in a web format (72dpi) with a logo, we would run the following code:
 
@@ -79,7 +81,7 @@ This automatically exports the last rendered plot into the working directory wit
 
 ## Cesar Australia colour palettes
 
-Finally, **seizer** contains a variety of colour palettes which can be used for your data vis. These are derived from the colours in the Cesar Australia style guide, with slight modifications to hue or brightness values to make them more suitable for data visualisation. As explained above, these can be easily plugged into `ggplot2` objects using the `scale_cesar` family of functions. However, you can also access the palettes directly using `cesar_palettes` to see the available palettes or pull individual colours or palettes out - for instance if you want to use them for a base R figure.
+Finally, **seizer** contains a variety of colour palettes which can be used for your data vis. These are derived from the colours in the Cesar Australia style guide, with slight modifications to hue or brightness values to make them more suitable for data visualisation. As explained above, these can be easily plugged into `ggplot2` objects using the `scale_*_cesar_*()` family of functions. However, you can also access the palettes directly using `cesar_palettes()` to see the available palettes or pull individual colours or palettes out - for instance if you want to use them for a base R figure.
 
 ### Discrete palettes
 
@@ -122,4 +124,4 @@ plot(as_palette(list(new_pal, new_pal2)))
 
 ```
 
-Finally, two additional helper functions are includes, `cesar_pal()` and `cesar_gradient_n_pal()`. These are a bit more complicated, and serve as wrappers around `cesar_rampr()` to facilitate its use in `scale_cesar` functions. In other words - you can safely ignore these, but feel free to play around with them if you'd like.
+Finally, two additional helper functions are includes, `cesar_pal()` and `cesar_gradient_n_pal()`. These are a bit more complicated, and serve as wrappers around `cesar_rampr()` to facilitate its use in `scale_*_cesar_*()` functions. In other words - you can safely ignore these, but feel free to play around with them if you'd like.
