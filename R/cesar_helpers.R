@@ -44,17 +44,16 @@ cesar_rampr <- function(pal_name = "cesar", n, alpha = 1, reverse = FALSE) {
   if(pal_name %in% pal_d){
 
     if(n > length(pal)) {
-      usethis::ui_warn("You selected a discrete palette for {n} colors. {usethis::ui_code('cesar_rampr()')} will only return n = {length(pal)} distinct colors. Some colors may be recycled.")
+      pal <- grDevices::colorRampPalette(pal)(n)
+      pal <- scales::alpha(pal, alpha = alpha)
+    } else {
+      pal <- rep(pal, length.out = n)
+      pal <- scales::alpha(pal, alpha = alpha)
     }
-
-    pal <- rep(pal, length.out = n)
-    pal <- scales::alpha(pal, alpha = alpha)
   }
 
-  else {
-    pal <- grDevices::colorRampPalette(pal)(n)
-    pal <- scales::alpha(pal, alpha = alpha)
-  }
+  pal <- grDevices::colorRampPalette(pal)(n)
+  pal <- scales::alpha(pal, alpha = alpha)
 
   if (reverse) {
     pal <- rev(pal)

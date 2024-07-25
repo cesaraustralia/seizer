@@ -69,7 +69,7 @@ p
 
 The next section contains more information about these colour palettes and how to use them.
 
-The final function you will use is `cesar_save()`. This is a wrapper function around the `ggplot2::ggsave()` function which you may have come across, but uses several pre-determined presets to generate your outputs. These match the size and resolution of the saved plot to the destination format. There are five presets: `twitter`, `web`, `linkedin`, `facebook` and `print`. If no preset is specified, the function defaults to `print`. There is also an optional argument, `logo`, which can be used to add a Cesar logo at the top right of the plot by setting `logo = TRUE`. This is turned off by default. You can also specify a destination pathway using the `path` argument - by default, the plot is saved to your working directory. Finally, the export defaults to .png format if an accepted format is not specified in the filename (e.g., "plot.jpeg").
+The final function you will use is `cesar_save()`. This is a wrapper function around the `ggplot2::ggsave()` function which you may have come across, allowing the user to save a plot by assigining values to width, height, dpi, etc. However, this function comes with several pre-determined presets to generate your outputs. These match the size and resolution of the saved plot to the destination format. There are five presets: `twitter`, `web`, `linkedin`, `facebook` and `print`. If no preset is specified, the function reverts to the user-provided values or, if none provided, to the `ggplot2::ggsave()` default values. There is also an optional argument, `logo`, which can be used to add a Cesar logo at the top right of the plot by setting `logo = TRUE`. This is turned off by default. You can also specify a destination pathway using the `path` argument - by default, the plot is saved to your working directory. Finally, the export defaults to .png format if an accepted format is not specified in the filename (e.g., "plot.jpeg").
 
 For example, if we wanted to save our plot in a web format (72dpi) with a logo, we would run the following code:
 
@@ -91,7 +91,7 @@ Finally, **seizer** contains a variety of colour palettes which can be used for 
 plot(as_palette(cesar_palettes[c(1,2)]))
 ```
 
-These include 7 colours - if you have more groups in your data, colours will be recycled. An alternative option is to discretise a continuous colour scale (either sequential or diverging) by passing it to a helpter function (see below) - this may be useful for ordered categorical variables, but note that colours may end up being too similar to discern between groups.
+These include 7 colours - if you have more groups in your data, You can use a helper function (see blow) to either interpolate additional intermediate colours or to discretise a continuous colour scale (either sequential or diverging). The latter option may be useful for ordered categorical variables, but note that colours may end up being too similar to discern between groups.
 
 ### Sequential palettes
 
@@ -113,14 +113,16 @@ Please note that for diverging palettes especially, care should be given to use 
 
 ### Helper functions
 
-A helper function is included with **seizer** to generate colour palettes of a user-defined length. This is `cesar_rampr()`, which accepts as arguments a number of colours requested, a colour palette (use `names(cesar_palettes)` to view all available palettes), an alpha value for transparency, and a logical argument to reverse the palette, if requested. It then generates a vector of colours, which can be used manually in plotting. If a discrete palette is selected, the function simply returns the colours in the palette in the same order, recycling colours if n > 7. If a continuous palette is selected, the function performs linear interpolation to discretise the palette and return several discrete values of length n.
+A helper function is included with **seizer** to generate colour palettes of a user-defined length. This is `cesar_rampr()`, which accepts as arguments a number of colours requested, a colour palette (use `names(cesar_palettes)` to view all available palettes), an alpha value for transparency, and a logical argument to reverse the palette, if requested. It then generates a vector of colours, which can be used manually in plotting. If a discrete palette is selected, the function simply returns the colours in the palette in the same order. If n > 7 the function will perform linear interpolation to find intermediate colours. If a continuous palette is selected, the function performs linear interpolation to discretise the palette and return several discrete values of length n.
 
 ```{r cesar_rampr, fig.height = 1}
 new_pal <- cesar_rampr(n = 15, pal_name = "oxford_blue_c", alpha = .7)
 
 new_pal2 <- cesar_rampr(n = 4, pal_name = "cesar_light", reverse = T)
 
-plot(as_palette(list(new_pal, new_pal2)))
+new_pal3 <- cesar_rampr(n = 10, pal_name = "cesar")
+
+plot(as_palette(list(new_pal, new_pal2, new_pal3)))
 
 ```
 

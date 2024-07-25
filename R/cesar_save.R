@@ -5,7 +5,7 @@
 #' @param filename File name to create on disk, png unless otherwise specified
 #' @param plot Plot to save, defaults to last plot displayed.
 #' @param path Path of the directory to save plot to: path and filename are combined to create the fully qualified file name. Defaults to the working directory.
-#' @param preset Passes pre-determined values to the arguments \code{scale}, \code{width}, \code{height} and \code{dpi} based on the type of output the visualisation is required for. Accepts one of \code{c("twitter", "web", "linkedin", "facebook", "print")} and overwrites user-provided values. If \code{NULL} (default) inherits \code{ggplot2::ggave} default values.
+#' @param preset Passes pre-determined values to the arguments \code{scale}, \code{width}, \code{height} and \code{dpi} based on the type of output the visualisation is required for. Accepts one of \code{c("twitter", "web", "linkedin", "facebook", "print")} and overwrites user-provided values. If \code{NULL} (default) inherits \code{ggplot2::ggsave} default values.
 #' @param logo if \code{TRUE} add Cesar logo at top right. Defaults to \code{FALSE}
 #' @param ... additional arguments to that pass to ggsave
 #'
@@ -45,13 +45,9 @@ cesar_save <- function(filename,
 
   if(!is.null(preset)){
     if(!preset %in% c("twitter", "web", "linkedin", "facebook", "print")){
-      warning("unknown preset provided; defaulting to print")
-      scale = 1
-      height = 5.625
-      width = 10
-      dpi = 300
+      warning("unknown preset provided; reverting to default user-provided values")
 
-      showtext::showtext_opts(dpi = 300)
+      showtext::showtext_opts(dpi = dpi)
     }
 
     if(preset == "twitter"){

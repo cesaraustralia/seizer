@@ -1,4 +1,7 @@
 url: https://cesaraustralia.github.io/seizer/
+repo:
+  url:
+    source: https://github.com/cesaraustralia/seizer/
 template:
   bootstrap: 5
 reference:
