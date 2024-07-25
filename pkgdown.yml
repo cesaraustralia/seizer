@@ -3,7 +3,7 @@ pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   articles/ggplot2-tutorial: ggplot2-tutorial.html
-last_built: 2024-07-25T05:33Z
+last_built: 2024-07-25T06:04Z
 urls:
   reference: https://cesaraustralia.github.io/seizer/reference
   article: https://cesaraustralia.github.io/seizer/articles
