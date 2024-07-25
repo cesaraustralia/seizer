@@ -8,8 +8,13 @@ cesar_save(
   filename,
   plot = last_plot(),
   path = NULL,
-  preset = "print",
+  preset = NULL,
   logo = FALSE,
+  scale = 1,
+  width = NA,
+  height = NA,
+  units = c("in", "cm", "mm", "px"),
+  dpi = 300,
   ...
 )
 }
@@ -20,7 +25,7 @@ cesar_save(
 
 \item{path}{Path of the directory to save plot to: path and filename are combined to create the fully qualified file name. Defaults to the working directory.}
 
-\item{preset}{Passes pre-determined values to the arguments \code{scale}, \code{width}, \code{height} and \code{dpi} based on the type of output the visualisation is required for. Accepts one of \code{c("twitter", "web", "linkedin", "facebook", "print")}. Deafults to \code{"print"}.}
+\item{preset}{Passes pre-determined values to the arguments \code{scale}, \code{width}, \code{height} and \code{dpi} based on the type of output the visualisation is required for. Accepts one of \code{c("twitter", "web", "linkedin", "facebook", "print")} and overwrites user-provided values. If \code{NULL} (default) inherits \code{ggplot2::ggave} default values.}
 
 \item{logo}{if \code{TRUE} add Cesar logo at top right. Defaults to \code{FALSE}}
 
