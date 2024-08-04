@@ -9,7 +9,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-This article includes a brief explanation of how to use `ggplot2`, and how to integrate the **seizer** functions with it. This is far from an in-depth article, but it should be enough for you to be able to generate some basic plots using `ggplot2`. See the [Further reading] section if you want to dive deeper into the world of `ggplot2`.
+This article includes a brief explanation on how to use `ggplot2`, and how to integrate the **seizer** functions with it. This is far from an in-depth article, but it should be enough for you to be able to generate some basic plots using `ggplot2`. See the [Further reading] section if you want to dive deeper into the world of `ggplot2`.
 
 We'll begin, always, by loading our packages:
 
@@ -52,7 +52,7 @@ ggplot(df, aes(x, y, group = group, fill = factor(group))) +
           panel.grid.major.y = element_blank())
 ```
 
-As you can see, the key word in the layered grammar of graphics behind `ggplot2` is *layered*. Each component is passed separately to a function, and you add them one to another to create a complete plot. We will explain how by recreating the following figure stage by stage:
+As you can see, the key word in the layered grammar of graphics behind `ggplot2` is *layered*. Each component is passed separately to a function, and you add them to one another to create a complete plot. We will explain how by recreating the following figure stage by stage:
 
 ```{r ggplot cesar scale, message = FALSE, warning = FALSE, echo = FALSE}
 iris %>% ggplot(aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fill = Species)) + geom_point() + geom_smooth(colour = ancient_lavastone, method = "lm") + facet_wrap(~Species, scales = "free") + labs(title = "This is a title", subtitle = "This is a subtitle") +
@@ -61,7 +61,7 @@ iris %>% ggplot(aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fi
 
 ### 1. Data
 
-The basis of any plot is the data underlying it. Our data will consist of a dataframe, and we will want to visualise at least one dimension, or column, in the data. For example, we can view the `iris` dataset which comes together with `ggplot2` and has data of sepal and petal dimensions for different species of iris flowers.
+The basis of any plot is the data underlying it. Our data will consist of a dataframe, of which we will want to visualise at least one dimension, or column. For example, we can view the `iris` dataset which comes together with `ggplot2` and has data of sepal and petal dimensions for different species of iris flowers.
 
 ```{r iris}
 head(iris)
@@ -87,11 +87,11 @@ p <- iris %>% ggplot()
 p
 ```
 
-Note that in both cases, we end up with an empty plot. This is because while we have provided `ggplot2` with the data, we have not provided any other information on how to construct our plot. But we have created a `ggplot` object, which we can now add more and more to using other functions.
+Note that in both cases, we end up with an empty plot. This is because while we have provided `ggplot2` with the data, we have not provided any other information on how to actually represent the data in our plot. But we have created a `ggplot` object, which we can now add more and more to using other functions.
 
 ### 2. Mapping
 
-The next step is to decide which dimension, or dimensions, we want to plot. In other words, we define the axes of our plot, and whether any dimensions are encoded to size, shape, colour, etc. This is done using the `ggplot2::aes()` function, which defines a list of aesthetic mappings, and is passed on to the `ggplot` object using the `mapping` argument. This is how we translate the data to the graphics system. So, for example, if we want to plot petal length against sepal length, we pass these as our axes to the `ggplot` object:
+The next step is to decide which dimension, or dimensions, we want to plot. In other words, we define the axes of our plot, and whether any dimensions are encoded to size, shape, colour, etc. This is done using the `ggplot2::aes()` function, which defines a list of aesthetic mappings, and is passed on to the `ggplot` object using the `mapping` argument. This is how we translate the data to the graphics system, by "mapping" a column (i.e., dimension of data) onto a graphical element (aesthetic). So, for example, if we want to plot petal length against sepal length, we pass these as our axes to the `ggplot` object:
 
 ```{r aes}
 p <- ggplot(iris, aes(x = Sepal.Length, y = Petal.Length))
@@ -105,11 +105,11 @@ Our plot is coming along - we now have axes, and we see that the ranges on the a
 
 Layers display the mapped data from the previous step in some kind of graphical representation. To quote from the `ggplot` documentation:
 
-Every layer consists of three important parts:
+*Every layer consists of three important parts:*
 
-1. The **geometry** that determines how data are displayed, such as points, lines, or rectangles.
-2. The **statistical** transformation that may compute new variables from the data and affect what of the data is displayed.
-3. The **position** adjustment that primarily determines where a piece of data is being displayed.
+1. *The* ***geometry*** *that determines how data are displayed, such as points, lines, or rectangles.*
+2. *The* ***statistical*** *transformation that may compute new variables from the data and affect what of the data is displayed.*
+3. *The* ***position*** *adjustment that primarily determines where a piece of data is being displayed.*
 
 Layers are constructed using either `geom_*()` or `stat_*()` functions. We will focus here on geoms, which are the geometric objects with which we want the data visualised. These can be points, bars, lines, boxes, etc. There are many different geoms to choose from - but some will not work with our data. For example, this works fine:
 
@@ -123,7 +123,7 @@ but this throws up an error:
 p + geom_bar()
 ```
 
-You'll notice the error mentions something called `ggplot2::stat_count()`. This is the statistical transformation - which determines whether or not we want to show some kind of statistical measure of our underlying data, for example a count. But it could also be the mean, spread, confidence intervals, etc. All geoms have underlying default `stat` values, which define the statistical transformation to use on the data in this layer. But some combinations just don't make sense. So, our first attempt worked because `ggplot2::geom_point()` by default uses `stat = "identity"` - which means the data are not transformed, and each datum is shown as a point. But, `ggplot2::geom_bar()` by default uses `stat = "count"`, which doesn't work with two dimensions. This is a statistical transformation that counts the number of unique values in a column, so it really only works when you have a single dimension, for example:
+You'll notice the error mentions something called `ggplot2::stat_count()`. This is the statistical transformation - which determines whether or not we want to show some kind of statistical measure of our underlying data, for example a count. But it could also be the mean, spread, confidence intervals, etc. All geoms have underlying default `stat` values, which define the statistical transformation to use on the data in this layer. But some combinations just don't make sense. So, our first attempt worked because `ggplot2::geom_point()` by default uses `stat = "identity"` - which means the data are not transformed, and each datum is shown as a point with an x and a y coordinate. But, `ggplot2::geom_bar()` by default uses `stat = "count"`, which doesn't work with two dimensions. This is a statistical transformation that counts the number of unique values in a column, so it really only works when you have a single dimension, for example in a barplot representing a histogram:
 
 ```{r geom 3}
 ggplot(iris, aes(x = Sepal.Length)) + geom_bar()
@@ -137,7 +137,7 @@ p <- p + geom_point()
 p + geom_smooth()
 ```
 
-By default, `ggplot2::geom_smooth()` fits a non-linear model (either `loess` or `gam` depending on the sample size of the data), but we can constrain it to show a linear regression - which means we have now created a scatterplot with a trend line from a linear model which we could construct using the code `lm(Petal.Length ~ Sepal.Length, data = iris)`:
+By default, `ggplot2::geom_smooth()` fits a non-linear model (either `loess` or `gam` depending on the sample size of the data), but we can constrain it to show a linear regression - which means we have now created a scatterplot with a trend line from a linear model of the form `y ~ x`. We could construct this model by running `lm(Petal.Length ~ Sepal.Length, data = iris)`:
 
 ```{r smooth 2}
 p <- p + geom_smooth(method = "lm")
@@ -155,7 +155,7 @@ p
 
 We've now mapped the colour aesthetic onto the column Species, so that each unique value of Species gets its own colour. This applies to all geoms, because we passed the colour aesthetic to the `ggplot2::ggplot()` function. Hence, we get three different regression lines, because by mapping colour to a discrete variable, we have also implicitly passed a grouping variable - *i.e.*, the statistical transformation underlying `ggplot2::geom_smooth()` is applied separately to each group.
 
-However, we could also map the aesthetic variable to a single layer, by passing it to only one `geom_*()`:
+However, we could also map the aesthetic variable to a single layer, by passing it to only one `geom_*()` and not the other:
 
 ```{r scale colour 2}
 ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) + geom_point(aes(colour = Species)) + geom_smooth(method = "lm")
@@ -167,11 +167,11 @@ One important thing to note here is that unlike in the previous plot, the regres
 ggplot(iris, aes(x = Sepal.Length, y = Petal.Length)) + geom_point(aes(colour = Species)) + geom_smooth(aes(group = Species), method = "lm")
 ```
 
-This is just an example of the strength of the layered structure of `ggplot2`.
+This is just an example of the strength of the layered structure of `ggplot2`. By changing the aesthetic mappings and even data arguments of different layers, you can plot your data in many interesting ways.
 
 For more expert `ggplot2` users, you can use `geom_*()` in unconventional ways for more complex data vis by changing the `stat` value, or by passing a `stat_*()` function and adjusting its `geom` argument. This is beyond the scope of this tutorial, but feel free to experiment if you're interested.
 
-Finally, there is the matter of the position. Just as with statistical transformations, each `geom_*()` function comes with its own default `position` argument. We won't get into it here, but know that this can be a very useful tool for some visualisations by nudging components to the sides or overlapping them.
+Finally, there is the matter of the position. Just as with statistical transformations, each `geom_*()` function comes with its own default `position` argument. We won't get into it here, but know that this can be a very useful tool for some visualisations by nudging components to the sides or overlapping them - and this can be especially important for plots like boxplots or barplots.
 
 At this point, we have everything we need to create a simple plot. But there's a lot more we can do by adjusting the next four layers in our grammar of graphics cake.
 
@@ -266,7 +266,7 @@ p + facet_wrap(~ Species)
 Note that all three facets have shared ranges on their axes. This can sometimes be useful, if you want to easily compare one group to another. In other cases, it may be informative - for instance, if the range of values in one group is so large that the variation in another is masked by it. We can sort of see something like that happen with the species *setosa*, where most of the subplot is empty space. We can get around this using the `scales` argument in the `facet_*()` function. We can free up one or both of the axes by passing `scales = "free_x"`, `scales = "free_y"` or `scales = "free"`, which essentially changes the scale parameters of individual facets based on the data range for the group in the data subset:
 
 ```{r facets 2}
-p <- p + facet_wrap(~ Species, scales = "free_x")
+p <- p + facet_wrap(~ Species, scales = "free")
 
 p
 ```
@@ -328,7 +328,7 @@ ggplot(iris, # 1. Data
        aes(x = Sepal.Length, y = Petal.Length, colour = Sepal.Width, fill = Species)) + # 2. Mapping
   geom_point() + geom_smooth(colour = ancient_lavastone, method = "lm") + # 3. Layers
   scale_colour_cesar_c(palette = "galliano_c") + scale_fill_cesar_d() + # 4. Scales
-  facet_wrap(~ Species, scales = "free_x") + # 5. Facets
+  facet_wrap(~ Species, scales = "free") + # 5. Facets
   theme_cesar() + # 7. Theme
   labs(title = "This is a title", subtitle = "This is a subtitle") 
 ```

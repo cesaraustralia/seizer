@@ -1,4 +1,3 @@
-
 #' Chooses palette to use with ggplot2
 #'
 #' @description

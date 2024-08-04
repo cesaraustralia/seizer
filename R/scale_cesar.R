@@ -59,7 +59,6 @@
 #'
 
 #' @export
-#' @rdname scale_cesar
 scale_colour_cesar_d <- function(name = waiver(), ..., alpha = 1, reverse = FALSE, palette = "cesar",
                                    aesthetics = "colour") {
 

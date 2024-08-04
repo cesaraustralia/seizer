@@ -26,6 +26,7 @@ You may be asked to update some packages, if the existing versions
 installed on your computer are old. Updating may cause compatibility
 issues with old code, so I suggest skipping updates on the first install
 attempt. If the package works fine, then there’s nothing to worry about.
+If the installation fails, try again and update the required packages.
 
 ## Using seizer
 
@@ -87,6 +88,38 @@ p
 The next section contains more information about these colour palettes
 and how to use them.
 
+You may want to drop some static elements from your plot - specifically,
+the legend, the grid lines, the axis tick labels or the axis titles.
+This can be a bit cumbersome in `ggplot2` because it requires you to
+play around with the many possible `ggplot2::theme()` elements. To save
+you the trouble, **seizer** has the `drop_*()` family of functions,
+which pass the relevant arguments to `ggplot2::theme()` under the hood.
+If you want to remove a legend, you simply add `drop_legend()` to your
+plot:
+
+``` r
+p + drop_legend()
+#> `geom_smooth()` using formula = 'y ~ x'
+```
+
+![](man/figures/ggplot%20drop%20legend-1.png)<!-- -->
+
+The other `drop_*()` functions work similarly, but you will need to
+specify which axis you want to drop the element from. Your options are
+`x`, `y` or `both`. So for example, if you want to drop the grid lines
+from the x axis, drop the tick labels from the y axis, and drop the
+titles from both, you would run the following code:
+
+``` r
+p +
+  drop_grid("x") +
+  drop_labels("y") +
+  drop_titles("both")
+#> `geom_smooth()` using formula = 'y ~ x'
+```
+
+![](man/figures/ggplot%20drop%20elements-1.png)<!-- -->
+
 The final function you will use is `cesar_save()`. This is a wrapper
 function around the `ggplot2::ggsave()` function which you may have come
 across, allowing the user to save a plot by assigining values to width,
@@ -95,13 +128,14 @@ pre-determined presets to generate your outputs. These match the size
 and resolution of the saved plot to the destination format. There are
 five presets: `twitter`, `web`, `linkedin`, `facebook` and `print`. If
 no preset is specified, the function reverts to the user-provided values
-or, if none provided, to the `ggplot2::ggsave()` default values. There
-is also an optional argument, `logo`, which can be used to add a Cesar
-logo at the top right of the plot by setting `logo = TRUE`. This is
-turned off by default. You can also specify a destination pathway using
-the `path` argument - by default, the plot is saved to your working
-directory. Finally, the export defaults to .png format if an accepted
-format is not specified in the filename (e.g., “plot.jpeg”).
+or, if none provided, to the `ggplot2::ggsave()` default values which
+are determined by your monitor size and resolution. There is also an
+optional argument, `logo`, which can be used to add a Cesar logo at the
+top right of the plot by setting `logo = TRUE`. This is turned off by
+default. You can also specify a destination pathway using the `path`
+argument - by default, the plot is saved to your working directory.
+Finally, the export defaults to .png format if an accepted format is not
+specified in the filename (e.g., “plot.jpeg”).
 
 For example, if we wanted to save our plot in a web format (72dpi) with
 a logo, we would run the following code:
@@ -121,7 +155,7 @@ Australia style guide, with slight modifications to hue or brightness
 values to make them more suitable for data visualisation. As explained
 above, these can be easily plugged into `ggplot2` objects using the
 `scale_*_cesar_*()` family of functions. However, you can also access
-the palettes directly using `cesar_palettes()` to see the available
+the palettes directly using `cesar_palettes` to see the available
 palettes or pull individual colours or palettes out - for instance if
 you want to use them for a base R figure.
 
@@ -133,7 +167,7 @@ mapping onto unordered categorical variables:
 ![](man/figures/discrete-1.png)<!-- -->
 
 These include 7 colours - if you have more groups in your data, You can
-use a helper function (see blow) to either interpolate additional
+use a helper function (see below) to either interpolate additional
 intermediate colours or to discretise a continuous colour scale (either
 sequential or diverging). The latter option may be useful for ordered
 categorical variables, but note that colours may end up being too
@@ -143,7 +177,7 @@ similar to discern between groups.
 
 **seizer** includes seven sequential palettes, which are suitable for
 mapping onto continuous variables. These are all based on “primary”
-cesar colours, and vary in brightness values around a single base hue.
+Cesar colours, and vary in brightness values around a single base hue.
 The seven palettes are:
 
 ![](man/figures/sequential-1.png)<!-- -->
@@ -192,7 +226,7 @@ plot(as_palette(list(new_pal, new_pal2, new_pal3)))
 
 ![](man/figures/cesar_rampr-1.png)<!-- -->
 
-Finally, two additional helper functions are includes, `cesar_pal()` and
+Finally, two additional helper functions are included, `cesar_pal()` and
 `cesar_gradient_n_pal()`. These are a bit more complicated, and serve as
 wrappers around `cesar_rampr()` to facilitate its use in
 `scale_*_cesar_*()` functions. In other words - you can safely ignore
