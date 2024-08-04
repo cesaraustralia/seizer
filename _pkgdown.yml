@@ -22,6 +22,7 @@ reference:
 - contents:
   - theme_cesar
   - starts_with("scale")
+  - starts_with("drop")
   - cesar_save
 - title: Colour
   desc: Cesar Australia colour palettes and assorted help functions
