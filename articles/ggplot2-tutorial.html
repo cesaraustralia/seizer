@@ -70,7 +70,7 @@
 
     
     
-<p>This article includes a brief explanation of how to use
+<p>This article includes a brief explanation on how to use
 <code>ggplot2</code>, and how to integrate the <strong>seizer</strong>
 functions with it. This is far from an in-depth article, but it should
 be enough for you to be able to generate some basic plots using
@@ -94,7 +94,7 @@ from the <code>ggplot2</code> documentation):</p>
 <p><img src="ggplot2-tutorial_files/figure-html/grammar-1.png" width="700"></p>
 <p>As you can see, the key word in the layered grammar of graphics
 behind <code>ggplot2</code> is <em>layered</em>. Each component is
-passed separately to a function, and you add them one to another to
+passed separately to a function, and you add them to one another to
 create a complete plot. We will explain how by recreating the following
 figure stage by stage:</p>
 <p><img src="ggplot2-tutorial_files/figure-html/ggplot%20cesar%20scale-1.png" width="700"></p>
@@ -102,11 +102,10 @@ figure stage by stage:</p>
 <h3 id="data">1. Data<a class="anchor" aria-label="anchor" href="#data"></a>
 </h3>
 <p>The basis of any plot is the data underlying it. Our data will
-consist of a dataframe, and we will want to visualise at least one
-dimension, or column, in the data. For example, we can view the
-<code>iris</code> dataset which comes together with <code>ggplot2</code>
-and has data of sepal and petal dimensions for different species of iris
-flowers.</p>
+consist of a dataframe, of which we will want to visualise at least one
+dimension, or column. For example, we can view the <code>iris</code>
+dataset which comes together with <code>ggplot2</code> and has data of
+sepal and petal dimensions for different species of iris flowers.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span></span>
@@ -137,9 +136,9 @@ function:</p>
 <p><img src="ggplot2-tutorial_files/figure-html/data%202-1.png" width="700"></p>
 <p>Note that in both cases, we end up with an empty plot. This is
 because while we have provided <code>ggplot2</code> with the data, we
-have not provided any other information on how to construct our plot.
-But we have created a <code>ggplot</code> object, which we can now add
-more and more to using other functions.</p>
+have not provided any other information on how to actually represent the
+data in our plot. But we have created a <code>ggplot</code> object,
+which we can now add more and more to using other functions.</p>
 </div>
 <div class="section level3">
 <h3 id="mapping">2. Mapping<a class="anchor" aria-label="anchor" href="#mapping"></a>
@@ -150,9 +149,10 @@ dimensions are encoded to size, shape, colour, etc. This is done using
 the <code><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">ggplot2::aes()</a></code> function, which defines a list of
 aesthetic mappings, and is passed on to the <code>ggplot</code> object
 using the <code>mapping</code> argument. This is how we translate the
-data to the graphics system. So, for example, if we want to plot petal
-length against sepal length, we pass these as our axes to the
-<code>ggplot</code> object:</p>
+data to the graphics system, by “mapping” a column (i.e., dimension of
+data) onto a graphical element (aesthetic). So, for example, if we want
+to plot petal length against sepal length, we pass these as our axes to
+the <code>ggplot</code> object:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -168,14 +168,21 @@ the dataframe. But the plot is still empty.</p>
 <p>Layers display the mapped data from the previous step in some kind of
 graphical representation. To quote from the <code>ggplot</code>
 documentation:</p>
-<p>Every layer consists of three important parts:</p>
+<p><em>Every layer consists of three important parts:</em></p>
 <ol style="list-style-type: decimal">
-<li>The <strong>geometry</strong> that determines how data are
-displayed, such as points, lines, or rectangles.</li>
-<li>The <strong>statistical</strong> transformation that may compute new
-variables from the data and affect what of the data is displayed.</li>
-<li>The <strong>position</strong> adjustment that primarily determines
-where a piece of data is being displayed.</li>
+<li>
+<em>The</em> <strong><em>geometry</em></strong> <em>that determines
+how data are displayed, such as points, lines, or rectangles.</em>
+</li>
+<li>
+<em>The</em> <strong><em>statistical</em></strong>
+<em>transformation that may compute new variables from the data and
+affect what of the data is displayed.</em>
+</li>
+<li>
+<em>The</em> <strong><em>position</em></strong> <em>adjustment that
+primarily determines where a piece of data is being displayed.</em>
+</li>
 </ol>
 <p>Layers are constructed using either <code>geom_*()</code> or
 <code>stat_*()</code> functions. We will focus here on geoms, which are
@@ -204,12 +211,12 @@ statistical transformation to use on the data in this layer. But some
 combinations just don’t make sense. So, our first attempt worked because
 <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">ggplot2::geom_point()</a></code> by default uses
 <code>stat = "identity"</code> - which means the data are not
-transformed, and each datum is shown as a point. But,
-<code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">ggplot2::geom_bar()</a></code> by default uses
+transformed, and each datum is shown as a point with an x and a y
+coordinate. But, <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">ggplot2::geom_bar()</a></code> by default uses
 <code>stat = "count"</code>, which doesn’t work with two dimensions.
 This is a statistical transformation that counts the number of unique
 values in a column, so it really only works when you have a single
-dimension, for example:</p>
+dimension, for example in a barplot representing a histogram:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html" class="external-link">geom_bar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="ggplot2-tutorial_files/figure-html/geom%203-1.png" width="700"></p>
@@ -230,7 +237,8 @@ where y is predicted by x:</p>
 model (either <code>loess</code> or <code>gam</code> depending on the
 sample size of the data), but we can constrain it to show a linear
 regression - which means we have now created a scatterplot with a trend
-line from a linear model which we could construct using the code
+line from a linear model of the form <code>y ~ x</code>. We could
+construct this model by running
 <code>lm(Petal.Length ~ Sepal.Length, data = iris)</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span>
@@ -259,7 +267,7 @@ statistical transformation underlying
 <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">ggplot2::geom_smooth()</a></code> is applied separately to each
 group.</p>
 <p>However, we could also map the aesthetic variable to a single layer,
-by passing it to only one <code>geom_*()</code>:</p>
+by passing it to only one <code>geom_*()</code> and not the other:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">iris</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Petal.Length</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div>
@@ -276,7 +284,9 @@ regression lines but without individual colours:</p>
 <span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div>
 <p><img src="ggplot2-tutorial_files/figure-html/scale%20colour%203-1.png" width="700"></p>
 <p>This is just an example of the strength of the layered structure of
-<code>ggplot2</code>.</p>
+<code>ggplot2</code>. By changing the aesthetic mappings and even data
+arguments of different layers, you can plot your data in many
+interesting ways.</p>
 <p>For more expert <code>ggplot2</code> users, you can use
 <code>geom_*()</code> in unconventional ways for more complex data vis
 by changing the <code>stat</code> value, or by passing a
@@ -287,8 +297,9 @@ experiment if you’re interested.</p>
 statistical transformations, each <code>geom_*()</code> function comes
 with its own default <code>position</code> argument. We won’t get into
 it here, but know that this can be a very useful tool for some
-visualisations by nudging components to the sides or overlapping
-them.</p>
+visualisations by nudging components to the sides or overlapping them -
+and this can be especially important for plots like boxplots or
+barplots.</p>
 <p>At this point, we have everything we need to create a simple plot.
 But there’s a lot more we can do by adjusting the next four layers in
 our grammar of graphics cake.</p>
@@ -454,7 +465,7 @@ by passing <code>scales = "free_x"</code>,
 essentially changes the scale parameters of individual facets based on
 the data range for the group in the data subset:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">p</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p</span></span>
 <span><span class="co">#&gt; `geom_smooth()` using formula = 'y ~ x'</span></span></code></pre></div>
@@ -563,7 +574,7 @@ default values:</p>
 <span>       <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">Sepal.Length</span>, y <span class="op">=</span> <span class="va">Petal.Length</span>, colour <span class="op">=</span> <span class="va">Sepal.Width</span>, fill <span class="op">=</span> <span class="va">Species</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 2. Mapping</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html" class="external-link">geom_smooth</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">ancient_lavastone</span>, method <span class="op">=</span> <span class="st">"lm"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 3. Layers</span></span>
 <span>  <span class="fu"><a href="../reference/scale_cesar.html">scale_colour_cesar_c</a></span><span class="op">(</span>palette <span class="op">=</span> <span class="st">"galliano_c"</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="../reference/scale_cesar.html">scale_fill_cesar_d</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 4. Scales</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 5. Facets</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">Species</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 5. Facets</span></span>
 <span>  <span class="fu"><a href="../reference/theme_cesar.html">theme_cesar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="co"># 7. Theme</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"This is a title"</span>, subtitle <span class="op">=</span> <span class="st">"This is a subtitle"</span><span class="op">)</span> </span></code></pre></div>
 </div>
