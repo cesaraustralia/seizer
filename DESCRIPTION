@@ -1,6 +1,6 @@
 Package: seizer
 Title: Seize Data Vis in R by the Reins!
-Version: 0.0.3
+Version: 0.0.3.1
 Authors@R: 
     person("Alex", "Slavenko", , "aslavenko@cesaraustralia.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3265-7715"))
