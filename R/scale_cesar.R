@@ -167,8 +167,8 @@ scale_fill_cesar_b <- function(name = waiver(), ..., alpha = 1, reverse = FALSE,
 scale_colour_cesar_g <- function(name = waiver(), ..., mid = 0, alpha = 1, reverse = FALSE, palette = "green_brown_d", guide = "colourbar",
                                  aesthetics = "colour", na.value = "#AFAFAF") {
 
-  if(!palette %in% c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d")){
-    stop('palette not in list of divergent palettes; use one of c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d")')
+  if(!palette %in% c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d", "red_blue_d")){
+    stop('palette not in list of divergent palettes; use one of c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d", "red_blue_d")')
   }
 
   force(mid)
@@ -189,8 +189,8 @@ scale_colour_cesar_g <- function(name = waiver(), ..., mid = 0, alpha = 1, rever
 scale_fill_cesar_g <- function(name = waiver(), ..., mid = 0, alpha = 1, reverse = FALSE, palette = "green_brown_d", guide = "colourbar",
                                aesthetics = "fill", na.value = "#AFAFAF") {
 
-  if(!palette %in% c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d")){
-    stop('palette not in list of divergent palettes; use one of c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d")')
+  if(!palette %in% c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d", "red_blue_d")){
+    stop('palette not in list of divergent palettes; use one of c("green_brown_d", "teal_orange_d", "orange_green_d", "gold_teal_d", "red_blue_d")')
   }
 
   force(mid)
