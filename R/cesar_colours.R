@@ -71,7 +71,9 @@ cesar_palettes <- list(
 
   gold_teal_d = c("#d1ab20", "#e1c16e", "#ecd8af", "#f1f1f1", "#b5dad0", "#74c2b0", "#07aa91"),
 
-  red_blue_d = c("#f63b21", "#f86752", "#fa9283", "#fcbdb4", "#b4d0fc", "#83b1fa", "#5293f8", "#2174f6")
+  red_blue_d = c("#f63b21", "#f86752", "#fa9283", "#fcbdb4", "#b4d0fc", "#83b1fa", "#5293f8", "#2174f6"),
+
+  collin_d = c("#2174F6", "#d1ab20", "#F63b21")
 )
 
 # Cesar Recommended  colors
